@@ -5,16 +5,21 @@ import {
   ApexAxisChartSeries,
   ApexChart,
   ApexXAxis,
-  ApexTitleSubtitle, ApexFill, ApexStroke
+  ApexTitleSubtitle, ApexFill, ApexStroke,
+  ApexDataLabels,
+  ApexTooltip, ApexYAxis,
 } from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
   title: ApexTitleSubtitle;
   fill: ApexFill;
   stroke: ApexStroke;
+  tooltip: ApexTooltip;
+  dataLabels: ApexDataLabels;
 };
 
 @Component({
@@ -41,10 +46,17 @@ export class CurrencyChartComponent implements OnInit {
             name: "Price",
             data: this.dataY
           }
+          // ,{
+          //   name: "series2",
+          //   data: this.dataY.map(value => {return value = value - 500})
+          // }
         ],
           chart: {
           height: 600,
-            type: "line"
+            type: "area"
+        },
+        dataLabels: {
+          enabled: false
         },
         title: {
           text: "My First Angular Chart"
@@ -52,11 +64,31 @@ export class CurrencyChartComponent implements OnInit {
         xaxis: {
           categories: this.dataX
         },
+        yaxis: {
+          floating: true,
+          tickAmount: 5,
+          labels: {
+            offsetX:200,
+            formatter: (value) => { return Math.round(value).toString()},
+            style: {
+              colors: '#493ab1',
+              fontSize: '12px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontWeight: 400,
+              cssClass: 'apexcharts-yaxis-label',
+            }
+          },
+        },
         fill: {
           colors: ['#493ab1', '#b82eb8']
         },
         stroke: {
           curve: 'smooth'
+        },
+        tooltip: {
+          x: {
+            format: "dd/MM/yy HH:mm"
+          },
         }
       };
 
