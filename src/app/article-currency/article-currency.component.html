@@ -5,7 +5,61 @@
 <div class="container-fluid" style="background-color: #0b1231;">
   <br>
 <div class="container font">
-  <div class="row">
+
+
+  <input type="text"  list="codes" [(ngModel)]="codeValue" (input)="search($event)">
+  <datalist id="codes">
+    <option *ngFor="let searchElement of searchResult" [value]="searchElement.id">{{searchElement.name}}</option>
+  </datalist>
+
+<!--  <mat-form-field>-->
+<!--    <input #searchBox (input)="search(searchBox.value)">-->
+<!--  </mat-form-field>-->
+
+<!--  <mat-autocomplete>-->
+<!--    <mat-option *ngFor="let searchElement of searchResult" [value]="searchElement.name">{{searchElement.name}}</mat-option>-->
+<!--  </mat-autocomplete>-->
+
+<!--  <input #searchBox type="text" (input)="search(searchBox.value)" id="userIdFirstWay" list="dynmicUserIds" />-->
+<!--  <datalist id="dynmicUserIds">-->
+<!--    <option *ngFor="let searchElement of searchResult" [value]="searchElement.name">{{searchElement.name}}</option>-->
+<!--  </datalist>-->
+
+<!--  <div id="search-component">-->
+<!--    <input #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="sssss"/>-->
+
+<!--    <ul class="search-result">-->
+<!--      <li *ngFor="let searchElement of searchResult" >-->
+<!--        <a routerLink="/detail/{{searchElement.id}}">-->
+<!--          {{searchElement.name}}-->
+<!--        </a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+
+  <div class="containers" *ngIf="coin != null">
+    <div class="scrolling" >
+              <div class="content">
+                <div class="box" *ngFor="let coin of coinList">
+                  <div class="digitFont">{{coin.name}} {{coin.symbol | uppercase}}</div>
+                  <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
+
+                </div>
+              </div>
+    </div>
+    <div class="scrolling" aria-hidden="true">
+              <div class="content">
+                <div class="box" *ngFor="let coin of coinList">
+                  <div class="digitFont">{{coin.name}} {{coin.symbol | uppercase}}</div>
+                  <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
+                </div>
+              </div>
+    </div>
+  </div>
+
+
+
+  <div class="row" *ngIf="coin != null">
     <div class="col-sm-auto">
       <img src="{{coin.image}}">
     </div>
@@ -29,7 +83,7 @@
     </div>
   </div>
   <br>
-  <div class="row">
+  <div class="row" *ngIf="coin != null">
     <div class="box col-sm">
       <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
       <div>Market Cup</div>
@@ -52,7 +106,7 @@
   <br>
 
   <div>
-    <div style="text-align:center">
+    <div *ngIf="coinChart != null" style="text-align:center">
       <apx-chart
         [series]="chartOptions.series"
         [chart]="chartOptions.chart"

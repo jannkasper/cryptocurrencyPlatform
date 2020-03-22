@@ -11,6 +11,7 @@ import { CurrencyListComponent } from './article-currency/currency-list/currency
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgMarqueeModule} from 'ng-marquee';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    NgMarqueeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

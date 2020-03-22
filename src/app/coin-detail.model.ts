@@ -27,3 +27,11 @@ export interface CoinChartModel {
   market_caps: number[][];
   total_volumes: number[][];
 }
+
+export interface CoinName {
+  id: string;
+  symbol: string;
+  name: string;
+}
+
+

@@ -1,14 +1,39 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
-import {CoinChartModel, CoinDetailModel} from './coin-detail.model';
+import {CoinChartModel, CoinDetailModel, CoinName} from './coin-detail.model';
 import {Subject, throwError} from 'rxjs';
+import {element} from 'protractor';
 
 @Injectable({ providedIn: 'root' })
 export class CoinsService {
   error = new Subject<string>();
 
   constructor(private http: HttpClient) { }
+
+  getAllRequest() {
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append('vs_currency', 'usd');
+    searchParams = searchParams.append('order', 'market_cap_desc');
+    searchParams = searchParams.append('per_page', '250');
+    searchParams = searchParams.append('page', '1');
+    searchParams = searchParams.append('sparkline', 'false');
+    return this.http.get<CoinDetailModel[]>('https://api.coingecko.com/api/v3/coins/markets', {
+      params: searchParams,
+      responseType: 'json'
+    }).pipe(
+      map(responseData => {
+        let list:CoinName[] = [];
+        responseData.forEach(element => {
+          list.push({id: element.id, name: element.name, symbol: element.symbol});
+        })
+        return list as CoinName[];
+      }),
+      catchError( errorRes => {
+        return throwError(errorRes);
+      })
+    );
+  }
 
   getCoinsRequest(vs_currency: string, order: string, perPage: number, page: number, sparkline: boolean) {
     let searchParams = new HttpParams();

@@ -37,3 +37,88 @@ img {
 a {
   color: rgb(66, 81, 141);
 }
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+.box:hover {
+  transform: scale(1.2);
+  opacity: .5;
+  cursor: pointer;
+}
+.containers {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.scrolling {
+  animation: marquee 40s linear infinite;
+  display: inline-block;
+  /*padding-right: 10px;*/
+}
+.containers:hover > .scrolling {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+
+.search-result .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.search-result:hover .tooltiptext {
+  visibility: visible;
+}
+
+.search-form {
+  position: relative;
+}
+.search-result {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  max-height: 200px;
+  overflow: auto;
+  background: #fff;
+  text-align: left;
+}
+.search-result p {
+  padding: 5px 10px;
+}
+.search-result p span {
+  display: inline-block;
+  color: #900;
+}
+
+.result-item {
+  margin: 0;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.result-item__hover {
+  background: #eee;
+}
+
+* {
+  box-sizing: border-box;
+}

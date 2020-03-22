@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CoinsService} from '../coins.service';
-import {CoinChartModel, CoinDetailModel} from '../coin-detail.model';
-import {from, Observable, Observer, Subscription} from 'rxjs';
-import {formatDate} from '@angular/common';
+import {CoinChartModel, CoinDetailModel, CoinName} from '../coin-detail.model';
+import {from, Observable, Observer, Subscription} from 'rxjs'
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -41,16 +40,32 @@ export class ArticleCurrencyComponent implements OnInit {
   fromTimestamp = 1392577232;
   toTimestamp = 1422577232;
   public coinList: CoinDetailModel[];
+  public allList: CoinName[];
   public coin: CoinDetailModel;
   public bitcoin: CoinDetailModel;
   public coinChart: CoinChartModel;
+  public searchResult: CoinName[];
   error = null;
   dataY: number[] = [];
   dataX: string[] = [];
+  codeValue: string;
 
   public chartOptions: Partial<ChartOptions>;
 
   constructor(private coinsService: CoinsService) { }
+
+  search(e): void {
+    let term = e.target.value;
+    this.searchResult = [];
+    if (term.length < 1) return;
+    for (let element of this.allList) {
+      if (element.id.toLowerCase().startsWith(term.toLowerCase())
+        || element.name.toLowerCase().startsWith(term.toLowerCase())) {
+        this.searchResult.push(element);
+      }
+    }
+  }
+
 
   setSelectedCoin(vsCurrency: string, currentCoinId: string){
     this.vsCurrency = vsCurrency;
@@ -83,9 +98,15 @@ export class ArticleCurrencyComponent implements OnInit {
   }
 
   readList(){
-    this.coinsService.getCoinsRequest(this.vsCurrency, 'market_cap_desc', 10, 1,false)
+    this.coinsService.getCoinsRequest(this.vsCurrency, 'market_cap_desc', 20, 1,false)
       .subscribe(listData => {
         this.coinList = listData});
+  }
+
+  readAll(){
+    this.coinsService.getAllRequest()
+      .subscribe(listData => {
+        this.allList = listData});
   }
 
   delay(ms: number) {
@@ -106,6 +127,7 @@ export class ArticleCurrencyComponent implements OnInit {
     this.setSelectedCoin('usd', 'bitcoin');
     this.readCoin();
     this.readList();
+    this.readAll();
     const fromDate = new Date("2020/03/14 12:00:00").getTime()/1000;
     const toDate = new Date("2020/03/21 12:00:00").getTime()/1000;
     this.setPeriod(fromDate, toDate); // that is: 24 * 60 * 60 * 1000
@@ -227,4 +249,3 @@ export class ArticleCurrencyComponent implements OnInit {
     })();
   }
 }
-// colors:['#493ab1', '#b82eb8']
