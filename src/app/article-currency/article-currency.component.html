@@ -1,4 +1,71 @@
-<app-currency-list [coinList]="coinList"></app-currency-list>
-<app-currency-detail [coinDetail]="coin"></app-currency-detail>
-<app-currency-chart [dataX]="dataX" [dataY]="dataY"></app-currency-chart>
+<!--<app-currency-list [coinList]="coinList"></app-currency-list>-->
+<!--<app-currency-detail [coinDetail]="coin"></app-currency-detail>-->
+<!--<app-currency-chart [dataX]="dataX" [dataY]="dataY"></app-currency-chart>-->
 <!--<div><code>observable|async</code>: Time: {{ time | async }}</div>-->
+<div class="container-fluid" style="background-color: #0b1231;">
+  <br>
+<div class="container font">
+  <div class="row">
+    <div class="col-sm-auto">
+      <img src="{{coin.image}}">
+    </div>
+    <div class="col align-self-sm-center">
+      <div class="row">
+        <div class="col" style="font-size: 26px; color: #d3d5dd;">
+          {{coin.name}} &nbsp; {{coin.symbol | uppercase}}
+        </div>
+        <div class="col-sm-3 digitFont" style="font-size: 20px;">
+          ${{coin.current_price}} {{coin.price_change_percentage_24h | number: '1.0-2'}}%
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <a href="#">Website</a> &nbsp; <a href="#">Explorer</a> &nbsp; <a href="#">Message Board</a>
+        </div>
+        <div class="col-sm-3 float-right digitFont" style="color: rgb(66, 81, 141);">
+          {{coin.current_price/bitcoin.current_price | number: '1.0-5'}} BTC
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="box col-sm">
+      <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
+      <div>Market Cup</div>
+    </div>
+    <div class="box col-sm">
+      <div class="digitFont">${{coin.total_volume| number: '1.0-0' }} {{vsCurrency | uppercase}}</div>
+      <div>Volume (24h)</div>
+    </div>
+    <div class="box col-sm">
+      <div class="digitFont">{{coin.circulating_supply | number: '1.0-0' }} {{coin.symbol | uppercase}}</div>
+      <div>Circulation Supply</div>
+    </div>
+    <div class="box col-sm">
+      <div class="digitFont">{{coin.total_supply | number: '1.0-0' }} {{coin.symbol | uppercase}}</div>
+      <div>Max Supply</div>
+    </div>
+  </div>
+</div>
+
+  <br>
+
+  <div>
+    <div style="text-align:center">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [yaxis]="chartOptions.yaxis"
+        [title]="chartOptions.title"
+        [fill]="chartOptions.fill"
+        [grid]="chartOptions.grid"
+        [stroke]="chartOptions.stroke"
+        [tooltip]="chartOptions.tooltip"
+        [dataLabels]="chartOptions.dataLabels"
+      ></apx-chart>
+    </div>
+  </div>
+
+</div>

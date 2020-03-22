@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { CurrencyListComponent } from './article-currency/currency-list/currency-list.component';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
