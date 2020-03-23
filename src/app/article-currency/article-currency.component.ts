@@ -56,7 +56,8 @@ export class ArticleCurrencyComponent implements OnInit {
 
   updateCoin(){
     if (this.currentCoinId == this.codeValue) return;
-    this.currentCoinId = this.codeValue
+    if (this.allList.find(el => el.id == this.codeValue) == null) return;
+    this.currentCoinId = this.codeValue;
     this.codeValue = "";
     this.searchResult = [];
     this.readCoin();
