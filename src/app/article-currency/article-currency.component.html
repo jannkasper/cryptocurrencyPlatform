@@ -6,36 +6,14 @@
   <br>
 <div class="container font">
 
-
-  <input type="text"  list="codes" [(ngModel)]="codeValue" (input)="search($event)">
+  <div style="text-align: right">
+  <input class="search__input" type="text" placeholder="Find Coin"  list="codes" [(ngModel)]="codeValue" (input)="search($event)">
   <datalist id="codes">
     <option *ngFor="let searchElement of searchResult" [value]="searchElement.id">{{searchElement.name}}</option>
   </datalist>
+  </div>
 
-<!--  <mat-form-field>-->
-<!--    <input #searchBox (input)="search(searchBox.value)">-->
-<!--  </mat-form-field>-->
-
-<!--  <mat-autocomplete>-->
-<!--    <mat-option *ngFor="let searchElement of searchResult" [value]="searchElement.name">{{searchElement.name}}</mat-option>-->
-<!--  </mat-autocomplete>-->
-
-<!--  <input #searchBox type="text" (input)="search(searchBox.value)" id="userIdFirstWay" list="dynmicUserIds" />-->
-<!--  <datalist id="dynmicUserIds">-->
-<!--    <option *ngFor="let searchElement of searchResult" [value]="searchElement.name">{{searchElement.name}}</option>-->
-<!--  </datalist>-->
-
-<!--  <div id="search-component">-->
-<!--    <input #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="sssss"/>-->
-
-<!--    <ul class="search-result">-->
-<!--      <li *ngFor="let searchElement of searchResult" >-->
-<!--        <a routerLink="/detail/{{searchElement.id}}">-->
-<!--          {{searchElement.name}}-->
-<!--        </a>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </div>-->
+  <hr style="border-color: rgb(66, 81, 141);">
 
   <div class="containers" *ngIf="coin != null">
     <div class="scrolling" >
