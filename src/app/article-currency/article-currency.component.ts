@@ -54,9 +54,11 @@ export class ArticleCurrencyComponent implements OnInit {
 
   constructor(private coinsService: CoinsService) { }
 
-  updateCoin(id){
-    if (this.currentCoinId == id.target.value) return;
-    this.currentCoinId = id.target.value;
+  updateCoin(){
+    if (this.currentCoinId == this.codeValue) return;
+    this.currentCoinId = this.codeValue
+    this.codeValue = "";
+    this.searchResult = [];
     this.readCoin();
     this.updateChart();
 
@@ -156,7 +158,8 @@ export class ArticleCurrencyComponent implements OnInit {
     (async () => {
       // Do something before delay
       this.readChart();
-      await this.delay(700);
+      while (this.dataY.length == 0)
+      await this.delay(100);
       this.chartOptions = {
         series: [
           {

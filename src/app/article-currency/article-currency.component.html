@@ -7,7 +7,7 @@
 <div class="container font" style="z-index: 1">
 
   <div style="text-align: right;">
-  <input class="search__input" type="text" placeholder="Find Coin"  list="codes" [(ngModel)]="codeValue" (change)="updateCoin($event)" (input)="search($event)">
+  <input class="search__input" type="text" placeholder="Find Coin"  list="codes" [(ngModel)]="codeValue" (change)="updateCoin()" (input)="search($event)">
   <datalist id="codes">
     <option *ngFor="let searchElement of searchResult" [value]="searchElement.id">{{searchElement.name}}</option>
   </datalist>
