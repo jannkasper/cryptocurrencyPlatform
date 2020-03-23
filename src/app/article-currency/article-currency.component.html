@@ -3,40 +3,37 @@
 <!--<app-currency-chart [dataX]="dataX" [dataY]="dataY"></app-currency-chart>-->
 <!--<div><code>observable|async</code>: Time: {{ time | async }}</div>-->
 <div class="container-fluid" style="background-color: #0b1231;">
-  <br>
-<div class="container font">
+  <div style="margin-top: 10px"></div>
+<div class="container font" style="z-index: 1">
 
-  <div style="text-align: right">
-  <input class="search__input" type="text" placeholder="Find Coin"  list="codes" [(ngModel)]="codeValue" (input)="search($event)">
+  <div style="text-align: right;">
+  <input class="search__input" type="text" placeholder="Find Coin"  list="codes" [(ngModel)]="codeValue" (change)="updateCoin($event)" (input)="search($event)">
   <datalist id="codes">
     <option *ngFor="let searchElement of searchResult" [value]="searchElement.id">{{searchElement.name}}</option>
   </datalist>
   </div>
 
-  <hr style="border-color: rgb(66, 81, 141);">
-
+  <div style="margin-top: 10px"></div>
   <div class="containers" *ngIf="coin != null">
     <div class="scrolling" >
               <div class="content">
-                <div class="box" *ngFor="let coin of coinList">
-                  <div class="digitFont">{{coin.name}} {{coin.symbol | uppercase}}</div>
-                  <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
+                <div class="check" *ngFor="let coin of coinList" (click)="selectedCoin(coin.id)">
+                  <div>{{coin.name}}</div>
+                  <div [ngStyle]="{'color': coin.price_change_percentage_24h > 0 ? '#2DAB41' : '#DA4931'}">${{coin.current_price | number: '1.0-2' }} <font>{{vsCurrency | uppercase}}</font></div>
 
                 </div>
               </div>
     </div>
     <div class="scrolling" aria-hidden="true">
               <div class="content">
-                <div class="box" *ngFor="let coin of coinList">
-                  <div class="digitFont">{{coin.name}} {{coin.symbol | uppercase}}</div>
-                  <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
+                <div class="check" *ngFor="let coin of coinList" (click)="selectedCoin(coin.id)">
+                  <div>{{coin.name}}</div>
+                  <div [ngStyle]="{'color': coin.price_change_percentage_24h > 0 ? '#2DAB41' : '#DA4931'}">${{coin.current_price | number: '1.0-2' }}<font>{{vsCurrency | uppercase}}</font></div>
                 </div>
               </div>
     </div>
   </div>
-
-
-
+  <div style="margin-top: 15px"></div>
   <div class="row" *ngIf="coin != null">
     <div class="col-sm-auto">
       <img src="{{coin.image}}">
@@ -60,7 +57,7 @@
       </div>
     </div>
   </div>
-  <br>
+  <div style="margin-top: 5px"></div>
   <div class="row" *ngIf="coin != null">
     <div class="box col-sm">
       <div class="digitFont">${{coin.market_cap | number: '1.0-0' }} <font>{{vsCurrency | uppercase}}</font></div>
@@ -81,9 +78,7 @@
   </div>
 </div>
 
-  <br>
-
-  <div>
+  <div class="col-sm-12" style="margin-top: -30px">
     <div *ngIf="coinChart != null" style="text-align:center">
       <apx-chart
         [series]="chartOptions.series"

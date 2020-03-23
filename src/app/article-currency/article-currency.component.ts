@@ -54,6 +54,22 @@ export class ArticleCurrencyComponent implements OnInit {
 
   constructor(private coinsService: CoinsService) { }
 
+  updateCoin(id){
+    if (this.currentCoinId == id.target.value) return;
+    this.currentCoinId = id.target.value;
+    this.readCoin();
+    this.updateChart();
+
+  }
+
+  selectedCoin(id: string){
+    if (this.currentCoinId == id) return;
+    this.currentCoinId = id;
+    this.readCoin();
+    this.updateChart();
+
+  }
+
   search(e): void {
     let term = e.target.value;
     this.searchResult = [];
@@ -66,15 +82,14 @@ export class ArticleCurrencyComponent implements OnInit {
     }
   }
 
-
   setSelectedCoin(vsCurrency: string, currentCoinId: string){
     this.vsCurrency = vsCurrency;
     this.currentCoinId = currentCoinId;
   }
 
   setPeriod(fromTimestamp: number, toTimestamp: number) {
-    const fromDate = Date.now() - 86400000;
-    const toDate = Date.now();
+    // const fromDate = Date.now() - 86400000;
+    // const toDate = Date.now();
     this.fromTimestamp = fromTimestamp;
     this.toTimestamp = toTimestamp;
   }
@@ -86,6 +101,8 @@ export class ArticleCurrencyComponent implements OnInit {
   }
 
   readChart() {
+    this.dataX = [];
+    this.dataY = [];
     this.coinsService.getCoinMarketChartRequest(this.vsCurrency, this.currentCoinId, this.fromTimestamp, this.toTimestamp)
       .subscribe(coinChartData => {
         console.log(coinChartData);
@@ -131,18 +148,15 @@ export class ArticleCurrencyComponent implements OnInit {
     const fromDate = new Date("2020/03/14 12:00:00").getTime()/1000;
     const toDate = new Date("2020/03/21 12:00:00").getTime()/1000;
     this.setPeriod(fromDate, toDate); // that is: 24 * 60 * 60 * 1000
+    this.updateChart();
+
+  }
+
+  updateChart() {
     (async () => {
       // Do something before delay
-      // this.readList();
       this.readChart();
-      await this.delay(1000);
-      // Do something after
-      // console.log('after delay');
-      // console.log(this.coinList);
-      // console.log(this.coin);
-      // console.log(this.bitcoin);
-      // console.log(this.coinChart);
-
+      await this.delay(700);
       this.chartOptions = {
         series: [
           {
@@ -182,7 +196,7 @@ export class ArticleCurrencyComponent implements OnInit {
         },
         yaxis: {
           floating: true,
-          tickAmount: 5,
+          tickAmount: 4,
           labels: {
             offsetX:200,
             offsetY:-10,
@@ -191,7 +205,7 @@ export class ArticleCurrencyComponent implements OnInit {
               colors: '#a5a7ad',
               fontSize: '14px',
               fontFamily: 'Lato, Helvetica, Arial, sans-serif',
-              fontWeight: 700,
+              fontWeight: 650,
               cssClass: 'apexcharts-yaxis-label',
             }
           },
@@ -245,7 +259,10 @@ export class ArticleCurrencyComponent implements OnInit {
           },
         }
       };
+      // console.log(this.coinChart);
+
 
     })();
+
   }
 }
